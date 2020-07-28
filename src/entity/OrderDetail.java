@@ -5,35 +5,23 @@ import java.math.BigDecimal;
 
 public class OrderDetail implements Serializable {
 
-  private String orderId;
-  private String itemCode;
+  private OrderDetailPK orderDetailPK;
   private int qty;
   private BigDecimal unitPrice;
 
   public OrderDetail() {
   }
 
-  public OrderDetail(String orderId, String itemCode, int qty, BigDecimal unitPrice) {
-    this.orderId = orderId;
-    this.itemCode = itemCode;
+  public OrderDetail(OrderDetailPK orderDetailPK, int qty, BigDecimal unitPrice) {
+    this.orderDetailPK = orderDetailPK;
     this.qty = qty;
     this.unitPrice = unitPrice;
   }
 
-  public String getOrderId() {
-    return orderId;
-  }
-
-  public void setOrderId(String orderId) {
-    this.orderId = orderId;
-  }
-
-  public String getItemCode() {
-    return itemCode;
-  }
-
-  public void setItemCode(String itemCode) {
-    this.itemCode = itemCode;
+  public OrderDetail(String orderId, String itemCode, int qty, BigDecimal unitPrice) {
+    this.orderDetailPK = new OrderDetailPK(orderId , itemCode);
+    this.qty = qty;
+    this.unitPrice = unitPrice;
   }
 
   public int getQty() {
@@ -52,13 +40,11 @@ public class OrderDetail implements Serializable {
     this.unitPrice = unitPrice;
   }
 
-  @Override
-  public String toString() {
-    return "OrderDetail{" +
-        "orderId='" + orderId + '\'' +
-        ", itemCode='" + itemCode + '\'' +
-        ", qty=" + qty +
-        ", unitPrice=" + unitPrice +
-        '}';
+  public OrderDetailPK getOrderDetailPK() {
+    return orderDetailPK;
+  }
+
+  public void setOrderDetailPK(OrderDetailPK orderDetailPK) {
+    this.orderDetailPK = orderDetailPK;
   }
 }
