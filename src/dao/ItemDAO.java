@@ -94,4 +94,22 @@ public class ItemDAO {
     }
   }
 
+  public static String getLastItemCode(){
+
+    try {
+      Connection connection = DBConnection.getInstance().getConnection();
+      Statement stm = connection.createStatement();
+      ResultSet rst = stm.executeQuery("SELECT * FROM Item ORDER BY code DESC LIMIT 1");
+      if (!rst.next()){
+        return null;
+      }else{
+        return rst.getString(1);
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+      return null;
+    }
+
+  }
+
 }
