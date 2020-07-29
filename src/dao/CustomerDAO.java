@@ -13,7 +13,7 @@ import entity.Customer;
 
 public class CustomerDAO {
 
-  public static List<Customer> findAllCustomers() {
+  public  List<Customer> findAllCustomers() {
 
     Connection connection = DBConnection.getInstance().getConnection();
     try {
@@ -34,7 +34,7 @@ public class CustomerDAO {
 
   }
 
-  public static Customer findCustomer(String customerId) {
+  public  Customer findCustomer(String customerId) {
 
     Connection connection = DBConnection.getInstance().getConnection();
     try {
@@ -55,7 +55,7 @@ public class CustomerDAO {
 
   }
 
-  public static boolean saveCustomer(Customer customer) {
+  public  boolean saveCustomer(Customer customer) {
 
     Connection connection = DBConnection.getInstance().getConnection();
     try {
@@ -77,7 +77,7 @@ public class CustomerDAO {
 
   }
 
-  public static boolean updateCustomer(Customer customer) {
+  public  boolean updateCustomer(Customer customer) {
 
     Connection connection = DBConnection.getInstance().getConnection();
     try {
@@ -99,7 +99,7 @@ public class CustomerDAO {
 
   }
 
-  public static boolean deleteCustomer(String customerId) {
+  public  boolean deleteCustomer(String customerId) {
 
     Connection connection = DBConnection.getInstance().getConnection();
     try {
@@ -117,7 +117,7 @@ public class CustomerDAO {
 
   }
 
-  public static String getLastCustomerId(){
+  public  String getLastCustomerId(){
     try {
       Connection connection = DBConnection.getInstance().getConnection();
       Statement stm = connection.createStatement();
