@@ -1,5 +1,6 @@
 package business;
 
+import dao.CustomerDAO;
 import dao.impl.CustomerDAOImpl;
 import dao.impl.ItemDAOImpl;
 import dao.impl.OrderDAOImpl;
@@ -21,12 +22,13 @@ import java.util.List;
 
 public class BusinessLogic {
 
-    public static String getNewCustomerId(){
-        String lastCustomerId = new CustomerDAOImpl().getLastCustomerId();
-        if (lastCustomerId == null){
+    public static String getNewCustomerId() {
+        CustomerDAO customerDAO = new CustomerDAOImpl();
+        String lastCustomerId = customerDAO.getLastCustomerId();
+        if (lastCustomerId == null) {
             return "C001";
-        }else{
-           int maxId=  Integer.parseInt(lastCustomerId.replace("C",""));
+        } else {
+            int maxId = Integer.parseInt(lastCustomerId.replace("C", ""));
             maxId = maxId + 1;
             String id = "";
             if (maxId < 10) {
@@ -40,12 +42,12 @@ public class BusinessLogic {
         }
     }
 
-    public static String getNewItemCode(){
+    public static String getNewItemCode() {
         String lastItemCode = new ItemDAOImpl().getLastItemCode();
-        if (lastItemCode == null){
+        if (lastItemCode == null) {
             return "I001";
-        }else{
-            int maxId=  Integer.parseInt(lastItemCode.replace("I",""));
+        } else {
+            int maxId = Integer.parseInt(lastItemCode.replace("I", ""));
             maxId = maxId + 1;
             String id = "";
             if (maxId < 10) {
@@ -59,12 +61,12 @@ public class BusinessLogic {
         }
     }
 
-    public static String getNewOrderId(){
+    public static String getNewOrderId() {
         String lastOrderId = new OrderDAOImpl().getLastOrderId();
-        if (lastOrderId == null){
+        if (lastOrderId == null) {
             return "OD001";
-        }else{
-            int maxId=  Integer.parseInt(lastOrderId.replace("OD",""));
+        } else {
+            int maxId = Integer.parseInt(lastOrderId.replace("OD", ""));
             maxId = maxId + 1;
             String id = "";
             if (maxId < 10) {
@@ -79,7 +81,8 @@ public class BusinessLogic {
     }
 
     public static List<CustomerTM> getAllCustomers() {
-        List<Customer> allCustomers = new CustomerDAOImpl().findAllCustomers();
+        CustomerDAO customerDAO = new CustomerDAOImpl();
+        List<Customer> allCustomers = customerDAO.findAllCustomers();
         List<CustomerTM> customers = new ArrayList<>();
         for (Customer customer : allCustomers) {
             customers.add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
@@ -88,15 +91,18 @@ public class BusinessLogic {
     }
 
     public static boolean saveCustomer(String id, String name, String address) {
-        return new CustomerDAOImpl().saveCustomer(new Customer(id, name, address));
+        CustomerDAO customerDAO = new CustomerDAOImpl();
+        return customerDAO.saveCustomer(new Customer(id, name, address));
     }
 
     public static boolean deleteCustomer(String customerId) {
-        return new CustomerDAOImpl().deleteCustomer(customerId);
+        CustomerDAO customerDAO = new CustomerDAOImpl();
+        return  customerDAO.deleteCustomer(customerId);
     }
 
     public static boolean updateCustomer(String name, String address, String customerId) {
-        return new CustomerDAOImpl().updateCustomer(new Customer(customerId, name, address));
+        CustomerDAO customerDAO = new CustomerDAOImpl();
+        return customerDAO.updateCustomer(new Customer(customerId, name, address));
     }
 
     public static List<ItemTM> getAllItems() {
@@ -122,7 +128,7 @@ public class BusinessLogic {
             BigDecimal.valueOf(unitPrice), qtyOnHand));
     }
 
-    public static boolean placeOrder(OrderTM order, List<OrderDetailTM> orderDetails){
+    public static boolean placeOrder(OrderTM order, List<OrderDetailTM> orderDetails) {
         Connection connection = DBConnection.getInstance().getConnection();
         try {
             connection.setAutoCommit(false);

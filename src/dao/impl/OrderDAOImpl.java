@@ -8,10 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.OrderDAO;
 import db.DBConnection;
 import entity.Order;
 
-public class OrderDAOImpl {
+public class OrderDAOImpl implements OrderDAO {
 
   public  List<Order> findAllOrders() {
     try {
