@@ -1,4 +1,4 @@
-package dao;
+package dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,41 +9,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import db.DBConnection;
-import entity.Customer;
-import entity.Item;
+import entity.Order;
 
-public class ItemDAO {
+public class OrderDAOImpl {
 
-  public  List<Item> findAllItems(){
+  public  List<Order> findAllOrders() {
     try {
       Connection connection = DBConnection.getInstance().getConnection();
       Statement stm = connection.createStatement();
-      ResultSet rst = stm.executeQuery("SELECT * FROM Item");
-      List<Item> items = new ArrayList<>();
-      while (rst.next()){
-        items.add(new Item(rst.getString(1),
-            rst.getString(2),
-            rst.getBigDecimal(3),
-            rst.getInt(4)));
+      ResultSet rst = stm.executeQuery("SELECT * FROM `Order`");
+      List<Order> orders = new ArrayList<>();
+      while (rst.next()) {
+        orders.add(new Order(rst.getString(1),
+            rst.getDate(2),
+            rst.getString(3)));
       }
-      return items;
+      return orders;
     } catch (SQLException throwables) {
       throwables.printStackTrace();
       return null;
     }
   }
 
-  public  Item findItem(String itemCode){
+  public  Order findOrder(String orderId) {
     try {
       Connection connection = DBConnection.getInstance().getConnection();
-      PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
-      pstm.setObject(1, itemCode);
+      PreparedStatement pstm = connection.prepareStatement("SELECT * FROM `Order` WHERE id=?");
+      pstm.setObject(1, orderId);
       ResultSet rst = pstm.executeQuery();
-      if (rst.next()){
-        return new Item(rst.getString(1),
-            rst.getString(2),
-            rst.getBigDecimal(3),
-            rst.getInt(4));
+      if (rst.next()) {
+        return new Order(rst.getString(1),
+            rst.getDate(2),
+            rst.getString(3));
       }
       return null;
     } catch (SQLException throwables) {
@@ -52,14 +49,13 @@ public class ItemDAO {
     }
   }
 
-  public  boolean saveItem(Item item){
+  public  boolean saveOrder(Order order) {
     try {
       Connection connection = DBConnection.getInstance().getConnection();
-      PreparedStatement pstm = connection.prepareStatement("INSERT INTO Item VALUES (?,?,?,?)");
-      pstm.setObject(1, item.getCode());
-      pstm.setObject(2, item.getDescription());
-      pstm.setObject(3, item.getUnitPrice());
-      pstm.setObject(4, item.getQtyOnHand());
+      PreparedStatement pstm = connection.prepareStatement("INSERT INTO `Order` VALUES (?,?,?)");
+      pstm.setObject(1, order.getId());
+      pstm.setObject(2, order.getDate());
+      pstm.setObject(3, order.getCustomerId());
       return pstm.executeUpdate() > 0;
     } catch (SQLException throwables) {
       throwables.printStackTrace();
@@ -67,14 +63,13 @@ public class ItemDAO {
     }
   }
 
-  public  boolean updateItem(Item item){
+  public  boolean updateOrder(Order order) {
     try {
       Connection connection = DBConnection.getInstance().getConnection();
-      PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
-      pstm.setObject(4, item.getCode());
-      pstm.setObject(1, item.getDescription());
-      pstm.setObject(2, item.getUnitPrice());
-      pstm.setObject(3, item.getQtyOnHand());
+      PreparedStatement pstm = connection.prepareStatement("UPDATE Order SET date=?, customerId=? WHERE id=?");
+      pstm.setObject(3, order.getId());
+      pstm.setObject(1, order.getDate());
+      pstm.setObject(2, order.getCustomerId());
       return pstm.executeUpdate() > 0;
     } catch (SQLException throwables) {
       throwables.printStackTrace();
@@ -82,11 +77,11 @@ public class ItemDAO {
     }
   }
 
-  public  boolean deleteItem(String itemCode){
+  public  boolean deleteOrder(String orderId) {
     try {
       Connection connection = DBConnection.getInstance().getConnection();
-      PreparedStatement pstm = connection.prepareStatement("DELETE FROM Item WHERE code=?");
-      pstm.setObject(1, itemCode);
+      PreparedStatement pstm = connection.prepareStatement("DELETE FROM Order WHERE code=?");
+      pstm.setObject(1, orderId);
       return pstm.executeUpdate() > 0;
     } catch (SQLException throwables) {
       throwables.printStackTrace();
@@ -94,12 +89,12 @@ public class ItemDAO {
     }
   }
 
-  public  String getLastItemCode(){
+  public  String getLastOrderId(){
 
     try {
       Connection connection = DBConnection.getInstance().getConnection();
       Statement stm = connection.createStatement();
-      ResultSet rst = stm.executeQuery("SELECT * FROM Item ORDER BY code DESC LIMIT 1");
+      ResultSet rst = stm.executeQuery("SELECT * FROM `Order` ORDER BY id DESC LIMIT 1");
       if (!rst.next()){
         return null;
       }else{
@@ -108,8 +103,9 @@ public class ItemDAO {
     } catch (SQLException throwables) {
       throwables.printStackTrace();
       return null;
-    }
 
   }
 
+  }
+  
 }
