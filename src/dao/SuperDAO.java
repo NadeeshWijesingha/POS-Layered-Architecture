@@ -2,7 +2,9 @@ package dao;
 
 import java.util.List;
 
-public interface SuperDAO <T,ID> {
+import entity.SuperEntity;
+
+public interface SuperDAO <T extends SuperEntity,ID> {
 
   List<T> findAll();
 
