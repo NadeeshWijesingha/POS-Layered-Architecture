@@ -17,17 +17,17 @@ public class DAOFactory {
     return (daoFactory == null) ? daoFactory = new DAOFactory() : daoFactory;
   }
 
-  public SuperDAO getDAO(DAOType daoType) {
+  public <T extends SuperDAO> T getDAO(DAOType daoType) {
 
     switch (daoType) {
       case CUSTOMER:
-        return new CustomerDAOImpl();
+        return (T) new CustomerDAOImpl();
       case ITEM:
-        return new ItemDAOImpl();
+        return (T) new ItemDAOImpl();
       case ORDER:
-        return new OrderDAOImpl();
+        return (T) new OrderDAOImpl();
       case ORDERDETAIL:
-        return new OrderDetailDAOImpl();
+        return (T) new OrderDetailDAOImpl();
       default:
         return null;
     }
