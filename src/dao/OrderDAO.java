@@ -1,6 +1,8 @@
 package dao;
 
-public interface OrderDAO extends SuperDAO{
+import entity.Order;
+
+public interface OrderDAO extends SuperDAO <Order, String> {
 
   public  String getLastOrderId();
 

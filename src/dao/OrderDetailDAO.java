@@ -1,5 +1,8 @@
 package dao;
 
-public interface OrderDetailDAO extends SuperDAO {
+import entity.OrderDetail;
+import entity.OrderDetailPK;
+
+public interface OrderDetailDAO extends SuperDAO <OrderDetail, OrderDetailPK> {
 
 }

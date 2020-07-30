@@ -1,6 +1,8 @@
 package dao;
 
-public interface ItemDAO extends SuperDAO {
+import entity.Item;
+
+public interface ItemDAO extends SuperDAO <Item, String> {
 
   public  String getLastItemCode();
 
