@@ -7,20 +7,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import dao.ItemDAO;
 import db.DBConnection;
-import entity.Customer;
 import entity.Item;
 
 public class ItemDAOImpl implements ItemDAO {
 
-  public  List<Object> findAll(){
+  @Override
+  public List<Item> findAll() {
     try {
       Connection connection = DBConnection.getInstance().getConnection();
       Statement stm = connection.createStatement();
       ResultSet rst = stm.executeQuery("SELECT * FROM Item");
-      List<Object> items = new ArrayList<>();
+      List<Item> items = new ArrayList<>();
       while (rst.next()){
         items.add(new Item(rst.getString(1),
             rst.getString(2),
@@ -34,7 +33,8 @@ public class ItemDAOImpl implements ItemDAO {
     }
   }
 
-  public  Item find(Object key){
+  @Override
+  public Item find(String key) {
     try {
       Connection connection = DBConnection.getInstance().getConnection();
       PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
@@ -53,10 +53,10 @@ public class ItemDAOImpl implements ItemDAO {
     }
   }
 
-  public  boolean save(Object entity){
+  @Override
+  public boolean save(Item item) {
     try {
       Connection connection = DBConnection.getInstance().getConnection();
-      Item item = (Item) entity;
       PreparedStatement pstm = connection.prepareStatement("INSERT INTO Item VALUES (?,?,?,?)");
       pstm.setObject(1, item.getCode());
       pstm.setObject(2, item.getDescription());
@@ -69,10 +69,10 @@ public class ItemDAOImpl implements ItemDAO {
     }
   }
 
-  public  boolean update(Object entity){
+  @Override
+  public boolean update(Item item) {
     try {
       Connection connection = DBConnection.getInstance().getConnection();
-      Item item = (Item) entity;
       PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
       pstm.setObject(4, item.getCode());
       pstm.setObject(1, item.getDescription());
@@ -85,7 +85,8 @@ public class ItemDAOImpl implements ItemDAO {
     }
   }
 
-  public  boolean delete(Object key){
+  @Override
+  public boolean delete(String key) {
     try {
       Connection connection = DBConnection.getInstance().getConnection();
       PreparedStatement pstm = connection.prepareStatement("DELETE FROM Item WHERE code=?");
@@ -114,5 +115,4 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
   }
-
 }
