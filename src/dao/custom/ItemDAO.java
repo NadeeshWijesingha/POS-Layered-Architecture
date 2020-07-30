@@ -1,9 +1,9 @@
 package dao.custom;
 
-import dao.SuperDAO;
+import dao.CrudDAO;
 import entity.Item;
 
-public interface ItemDAO extends SuperDAO<Item, String> {
+public interface ItemDAO extends CrudDAO<Item, String> {
 
   public  String getLastItemCode();
 
