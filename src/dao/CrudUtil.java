@@ -14,11 +14,11 @@ public class CrudUtil {
     return false;
   }
 
-  public static ResultSet executeQuery(String sql , List<String> params) throws SQLException {
+  public static ResultSet executeQuery(String sql , Object... params) throws SQLException {
     Connection connection = DBConnection.getInstance().getConnection();
     PreparedStatement pstm = connection.prepareStatement(sql);
     int i = 0;
-    for (String param : params) {
+    for (Object param : params) {
       i++;
       pstm.setObject(i, param);
     }
