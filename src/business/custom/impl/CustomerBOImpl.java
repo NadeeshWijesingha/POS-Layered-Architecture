@@ -1,4 +1,4 @@
-package business;
+package business.custom.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import dao.custom.CustomerDAO;
 import entity.Customer;
 import util.CustomerTM;
 
-public class CustomerBO {
+public class CustomerBOImpl {
 
   public String getNewCustomerId() {
     CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);

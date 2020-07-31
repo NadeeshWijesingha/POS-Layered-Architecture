@@ -1,4 +1,4 @@
-package business;
+package business.custom.impl;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -18,7 +18,7 @@ import entity.OrderDetail;
 import util.OrderDetailTM;
 import util.OrderTM;
 
-public class OrderBO {
+public class OrderBOImpl {
 
   public String getNewOrderId() {
     OrderDAO orderDAO = DAOFactory.getInstance().getDAO(DAOType.ORDER);
