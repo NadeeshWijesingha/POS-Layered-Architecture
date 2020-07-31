@@ -25,7 +25,12 @@ public class BusinessLogic {
 
     public static String getNewCustomerId() {
         CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
-        String lastCustomerId = customerDAO.getLastCustomerId();
+        String lastCustomerId = null;
+        try {
+            lastCustomerId = customerDAO.getLastCustomerId();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (lastCustomerId == null) {
             return "C001";
         } else {
@@ -45,7 +50,12 @@ public class BusinessLogic {
 
     public static String getNewItemCode() {
         ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
-        String lastItemCode = itemDAO.getLastItemCode();
+        String lastItemCode = null;
+        try {
+            lastItemCode = itemDAO.getLastItemCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (lastItemCode == null) {
             return "I001";
         } else {
@@ -65,7 +75,12 @@ public class BusinessLogic {
 
     public static String getNewOrderId() {
         OrderDAO orderDAO = DAOFactory.getInstance().getDAO(DAOType.ORDER);
-        String lastOrderId = orderDAO.getLastOrderId();
+        String lastOrderId = null;
+        try {
+            lastOrderId = orderDAO.getLastOrderId();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (lastOrderId == null) {
             return "OD001";
         } else {
@@ -85,7 +100,12 @@ public class BusinessLogic {
 
     public static List<CustomerTM> getAllCustomers() {
         CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
-        List<Customer> allCustomers = customerDAO.findAll();
+        List<Customer> allCustomers = null;
+        try {
+            allCustomers = customerDAO.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         List<CustomerTM> customers = new ArrayList<>();
         for (Customer customer : allCustomers) {
             customers.add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
@@ -95,22 +115,39 @@ public class BusinessLogic {
 
     public static boolean saveCustomer(String id, String name, String address) {
         CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
-        return customerDAO.save(new Customer(id, name, address));
+        try {
+            return customerDAO.save(new Customer(id, name, address));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }return false;
     }
 
     public static boolean deleteCustomer(String customerId) {
         CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
-        return  customerDAO.delete(customerId);
+        try {
+            return  customerDAO.delete(customerId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }return false;
     }
 
     public static boolean updateCustomer(String name, String address, String customerId) {
         CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
-        return customerDAO.update(new Customer(customerId, name, address));
+        try {
+            return customerDAO.update(new Customer(customerId, name, address));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }return false;
     }
 
     public static List<ItemTM> getAllItems() {
         ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
-        List<Item> allItems = itemDAO.findAll();
+        List<Item> allItems = null;
+        try {
+            allItems = itemDAO.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         List<ItemTM> items = new ArrayList<>();
         for (Item item : allItems) {
             items.add(new ItemTM(item.getCode(), item.getDescription(), item.getQtyOnHand(),
@@ -121,18 +158,30 @@ public class BusinessLogic {
 
     public static boolean saveItem(String code, String description, int qtyOnHand, double unitPrice) {
         ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
-        return itemDAO.save(new Item(code, description, BigDecimal.valueOf(unitPrice), qtyOnHand));
+        try {
+            return itemDAO.save(new Item(code, description, BigDecimal.valueOf(unitPrice), qtyOnHand));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }return false;
     }
 
     public static boolean deleteItem(String itemCode) {
         ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
-        return itemDAO.delete(itemCode);
+        try {
+            return itemDAO.delete(itemCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }return false;
     }
 
     public static boolean updateItem(String description, int qtyOnHand, double unitPrice, String itemCode) {
         ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
-        return itemDAO.update(new Item(itemCode, description,
-            BigDecimal.valueOf(unitPrice), qtyOnHand));
+        try {
+            return itemDAO.update(new Item(itemCode, description,
+                BigDecimal.valueOf(unitPrice), qtyOnHand));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }return false;
     }
 
     public static boolean placeOrder(OrderTM order, List<OrderDetailTM> orderDetails) {

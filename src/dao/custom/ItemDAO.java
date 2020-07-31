@@ -5,6 +5,6 @@ import entity.Item;
 
 public interface ItemDAO extends CrudDAO<Item, String> {
 
-  public  String getLastItemCode();
+  public  String getLastItemCode() throws Exception;
 
 }

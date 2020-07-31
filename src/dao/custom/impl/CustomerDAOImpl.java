@@ -12,23 +12,19 @@ import entity.Customer;
 public class CustomerDAOImpl implements CustomerDAO {
 
   @Override
-  public String getLastCustomerId() {
-    try {
+  public String getLastCustomerId() throws Exception {
+
       ResultSet rst = CrudUtil.execute("SELECT * FROM Customer ORDER BY id DESC LIMIT 1");
       if (!rst.next()) {
         return null;
       } else {
         return rst.getString(1);
       }
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return null;
-    }
   }
 
   @Override
-  public List<Customer> findAll() {
-    try {
+  public List<Customer> findAll() throws Exception{
+
       ResultSet rst = CrudUtil.execute("SELECT * FROM Customer");
       List<Customer> customers = new ArrayList<>();
       while (rst.next()) {
@@ -37,15 +33,12 @@ public class CustomerDAOImpl implements CustomerDAO {
             rst.getString(3)));
       }
       return customers;
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return null;
-    }
+
   }
 
   @Override
-  public Customer find(String key) {
-    try {
+  public Customer find(String key) throws Exception {
+
       ResultSet rst = CrudUtil.execute("SELECT * FROM Customer WHERE id=?", key);
       if (rst.next()) {
         return new Customer(rst.getString(1),
@@ -53,39 +46,24 @@ public class CustomerDAOImpl implements CustomerDAO {
             rst.getString(3));
       }
       return null;
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return null;
     }
-  }
 
   @Override
-  public boolean save(Customer customer) {
-    try {
+  public boolean save(Customer customer) throws Exception {
+
       return CrudUtil.execute("INSERT INTO Customer VALUES (?,?,?)", customer.getId(), customer.getName(), customer.getAddress());
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return false;
-    }
   }
 
   @Override
-  public boolean update(Customer customer) {
-    try {
+  public boolean update(Customer customer) throws Exception {
+
       return CrudUtil.execute("UPDATE Customer SET name=?, address=? WHERE id=?", customer.getName(), customer.getAddress(), customer.getId());
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return false;
-    }
   }
 
   @Override
-  public boolean delete(String key) {
-    try {
+  public boolean delete(String key) throws Exception {
+
       return CrudUtil.execute("DELETE FROM Customer WHERE id=?",key);
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return false;
-    }
+
   }
 }

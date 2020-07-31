@@ -12,23 +12,19 @@ import entity.Item;
 public class ItemDAOImpl implements ItemDAO {
 
   @Override
-  public String getLastItemCode() {
-    try {
+  public String getLastItemCode() throws Exception {
+
       ResultSet rst = CrudUtil.execute("SELECT * FROM Item ORDER BY code DESC LIMIT 1");
       if (!rst.next()) {
         return null;
       } else {
         return rst.getString(1);
       }
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return null;
-    }
   }
 
   @Override
-  public List<Item> findAll() {
-    try {
+  public List<Item> findAll() throws Exception {
+
       ResultSet rst = CrudUtil.execute("SELECT * FROM Item");
       List<Item> items = new ArrayList<>();
       while (rst.next()) {
@@ -38,15 +34,10 @@ public class ItemDAOImpl implements ItemDAO {
             rst.getInt(4)));
       }
       return items;
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return null;
-    }
   }
 
   @Override
-  public Item find(String key) {
-    try {
+  public Item find(String key) throws Exception {
       ResultSet rst = CrudUtil.execute("SELECT * FROM Item WHERE code=?",key);
       if (rst.next()) {
         return new Item(rst.getString(1),
@@ -55,39 +46,23 @@ public class ItemDAOImpl implements ItemDAO {
             rst.getInt(4));
       }
       return null;
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return null;
-    }
   }
 
   @Override
-  public boolean save(Item item) {
-    try {
+  public boolean save(Item item) throws Exception {
+
       return CrudUtil.execute("INSERT INTO Item VALUES (?,?,?,?)", item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand());
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return false;
-    }
   }
 
   @Override
-  public boolean update(Item item) {
-    try {
+  public boolean update(Item item) throws Exception {
+
       return CrudUtil.execute("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?", item.getDescription(), item.getUnitPrice(), item.getQtyOnHand(), item.getCode());
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return false;
-    }
   }
 
   @Override
-  public boolean delete(String key) {
-    try {
+  public boolean delete(String key) throws Exception {
+
       return CrudUtil.execute("DELETE FROM Item WHERE code=?",key);
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return false;
-    }
   }
 }
