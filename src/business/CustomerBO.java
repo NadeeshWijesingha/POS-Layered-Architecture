@@ -11,7 +11,7 @@ import util.CustomerTM;
 
 public class CustomerBO {
 
-  public static String getNewCustomerId() {
+  public String getNewCustomerId() {
     CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
     String lastCustomerId = null;
     try {
@@ -36,7 +36,7 @@ public class CustomerBO {
     }
   }
 
-  public static List<CustomerTM> getAllCustomers() {
+  public List<CustomerTM> getAllCustomers() {
     CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
     List<Customer> allCustomers = null;
     try {
@@ -51,31 +51,34 @@ public class CustomerBO {
     return customers;
   }
 
-  public static boolean saveCustomer(String id, String name, String address) {
+  public boolean saveCustomer(String id, String name, String address) {
     CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
     try {
       return customerDAO.save(new Customer(id, name, address));
     } catch (Exception e) {
       e.printStackTrace();
-    }return false;
+    }
+    return false;
   }
 
-  public static boolean deleteCustomer(String customerId) {
+  public boolean deleteCustomer(String customerId) {
     CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
     try {
-      return  customerDAO.delete(customerId);
+      return customerDAO.delete(customerId);
     } catch (Exception e) {
       e.printStackTrace();
-    }return false;
+    }
+    return false;
   }
 
-  public static boolean updateCustomer(String name, String address, String customerId) {
+  public boolean updateCustomer(String name, String address, String customerId) {
     CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
     try {
       return customerDAO.update(new Customer(customerId, name, address));
     } catch (Exception e) {
       e.printStackTrace();
-    }return false;
+    }
+    return false;
   }
 
 }

@@ -20,7 +20,7 @@ import util.OrderTM;
 
 public class OrderBO {
 
-  public static String getNewOrderId() {
+  public String getNewOrderId() {
     OrderDAO orderDAO = DAOFactory.getInstance().getDAO(DAOType.ORDER);
     String lastOrderId = null;
     try {
@@ -45,7 +45,7 @@ public class OrderBO {
     }
   }
 
-  public static boolean placeOrder(OrderTM order, List<OrderDetailTM> orderDetails) {
+  public boolean placeOrder(OrderTM order, List<OrderDetailTM> orderDetails) {
     Connection connection = DBConnection.getInstance().getConnection();
     OrderDAO orderDAO = DAOFactory.getInstance().getDAO(DAOType.ORDER);
     OrderDetailDAO orderDetailDAO = DAOFactory.getInstance().getDAO(DAOType.ORDERDETAIL);
@@ -64,14 +64,14 @@ public class OrderBO {
             order.getOrderId(), orderDetail.getCode(),
             orderDetail.getQty(), BigDecimal.valueOf(orderDetail.getUnitPrice())
         ));
-        if (!result){
+        if (!result) {
           connection.rollback();
           return false;
         }
         Item item = itemDAO.find(orderDetail.getCode());
         item.setQtyOnHand(item.getQtyOnHand() - orderDetail.getQty());
         itemDAO.update(item);
-        if (!result){
+        if (!result) {
           connection.rollback();
           return false;
         }

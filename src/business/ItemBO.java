@@ -12,7 +12,7 @@ import util.ItemTM;
 
 public class ItemBO {
 
-  public static String getNewItemCode() {
+  public String getNewItemCode() {
     ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
     String lastItemCode = null;
     try {
@@ -37,7 +37,7 @@ public class ItemBO {
     }
   }
 
-  public static List<ItemTM> getAllItems() {
+  public List<ItemTM> getAllItems() {
     ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
     List<Item> allItems = null;
     try {
@@ -53,32 +53,35 @@ public class ItemBO {
     return items;
   }
 
-  public static boolean saveItem(String code, String description, int qtyOnHand, double unitPrice) {
+  public boolean saveItem(String code, String description, int qtyOnHand, double unitPrice) {
     ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
     try {
       return itemDAO.save(new Item(code, description, BigDecimal.valueOf(unitPrice), qtyOnHand));
     } catch (Exception e) {
       e.printStackTrace();
-    }return false;
+    }
+    return false;
   }
 
-  public static boolean deleteItem(String itemCode) {
+  public boolean deleteItem(String itemCode) {
     ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
     try {
       return itemDAO.delete(itemCode);
     } catch (Exception e) {
       e.printStackTrace();
-    }return false;
+    }
+    return false;
   }
 
-  public static boolean updateItem(String description, int qtyOnHand, double unitPrice, String itemCode) {
+  public boolean updateItem(String description, int qtyOnHand, double unitPrice, String itemCode) {
     ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
     try {
       return itemDAO.update(new Item(itemCode, description,
           BigDecimal.valueOf(unitPrice), qtyOnHand));
     } catch (Exception e) {
       e.printStackTrace();
-    }return false;
+    }
+    return false;
   }
 
 }
