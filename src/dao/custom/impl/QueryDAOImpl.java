@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
 import dao.custom.QueryDAO;
 import db.DBConnection;
 import entity.CustomEntity;
@@ -46,7 +48,7 @@ public class QueryDAOImpl implements QueryDAO {
   }
 
   @Override
-  public CustomEntity search(String orderId) {
+  public List<CustomEntity> search(String orderId) {
     Connection connection = DBConnection.getInstance().getConnection();
     try {
       PreparedStatement pstm = connection.prepareStatement(
@@ -55,7 +57,7 @@ public class QueryDAOImpl implements QueryDAO {
       ResultSet rst = pstm.executeQuery();
 
       if (rst.next()){
-        return new CustomEntity(rst.getString(1), rst.getString(2), rst.getDate(3), rst.getString(4),rst.getInt(5));
+        return (List<CustomEntity>) new CustomEntity(rst.getString(1), rst.getString(2), rst.getDate(3), rst.getString(4),rst.getInt(5));
       }
 
     } catch (SQLException throwables) {
