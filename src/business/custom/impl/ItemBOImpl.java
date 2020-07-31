@@ -13,14 +13,10 @@ import util.ItemTM;
 
 public class ItemBOImpl implements ItemBO {
 
-  public String getNewItemCode() {
+  public String getNewItemCode() throws Exception {
     ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
-    String lastItemCode = null;
-    try {
-      lastItemCode = itemDAO.getLastItemCode();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    String lastItemCode = itemDAO.getLastItemCode();
+
     if (lastItemCode == null) {
       return "I001";
     } else {
@@ -38,14 +34,9 @@ public class ItemBOImpl implements ItemBO {
     }
   }
 
-  public List<ItemTM> getAllItems() {
+  public List<ItemTM> getAllItems() throws Exception {
     ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
-    List<Item> allItems = null;
-    try {
-      allItems = itemDAO.findAll();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    List<Item> allItems = itemDAO.findAll();
     List<ItemTM> items = new ArrayList<>();
     for (Item item : allItems) {
       items.add(new ItemTM(item.getCode(), item.getDescription(), item.getQtyOnHand(),
@@ -54,35 +45,20 @@ public class ItemBOImpl implements ItemBO {
     return items;
   }
 
-  public boolean saveItem(String code, String description, int qtyOnHand, double unitPrice) {
+  public boolean saveItem(String code, String description, int qtyOnHand, double unitPrice) throws Exception {
     ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
-    try {
-      return itemDAO.save(new Item(code, description, BigDecimal.valueOf(unitPrice), qtyOnHand));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return false;
+    return itemDAO.save(new Item(code, description, BigDecimal.valueOf(unitPrice), qtyOnHand));
   }
 
-  public boolean deleteItem(String itemCode) {
+  public boolean deleteItem(String itemCode) throws Exception {
     ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
-    try {
-      return itemDAO.delete(itemCode);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return false;
+    return itemDAO.delete(itemCode);
   }
 
-  public boolean updateItem(String description, int qtyOnHand, double unitPrice, String itemCode) {
+  public boolean updateItem(String description, int qtyOnHand, double unitPrice, String itemCode) throws Exception {
     ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
-    try {
-      return itemDAO.update(new Item(itemCode, description,
-          BigDecimal.valueOf(unitPrice), qtyOnHand));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return false;
+    return itemDAO.update(new Item(itemCode, description,
+        BigDecimal.valueOf(unitPrice), qtyOnHand));
   }
 
 }

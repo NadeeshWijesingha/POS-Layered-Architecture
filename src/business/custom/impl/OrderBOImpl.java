@@ -46,7 +46,7 @@ public class OrderBOImpl implements OrderBO {
     }
   }
 
-  public boolean placeOrder(OrderTM order, List<OrderDetailTM> orderDetails) {
+  public boolean placeOrder(OrderTM order, List<OrderDetailTM> orderDetails) throws Exception {
     Connection connection = DBConnection.getInstance().getConnection();
     OrderDAO orderDAO = DAOFactory.getInstance().getDAO(DAOType.ORDER);
     OrderDetailDAO orderDetailDAO = DAOFactory.getInstance().getDAO(DAOType.ORDERDETAIL);

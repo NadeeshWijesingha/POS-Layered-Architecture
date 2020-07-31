@@ -12,7 +12,7 @@ import util.CustomerTM;
 
 public class CustomerBOImpl implements CustomerBO {
 
-  public String getNewCustomerId() {
+  public String getNewCustomerId() throws Exception {
     CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
     String lastCustomerId = null;
     try {
@@ -37,14 +37,10 @@ public class CustomerBOImpl implements CustomerBO {
     }
   }
 
-  public List<CustomerTM> getAllCustomers() {
+  public List<CustomerTM> getAllCustomers() throws Exception {
     CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
     List<Customer> allCustomers = null;
-    try {
       allCustomers = customerDAO.findAll();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
     List<CustomerTM> customers = new ArrayList<>();
     for (Customer customer : allCustomers) {
       customers.add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
@@ -52,34 +48,19 @@ public class CustomerBOImpl implements CustomerBO {
     return customers;
   }
 
-  public boolean saveCustomer(String id, String name, String address) {
+  public boolean saveCustomer(String id, String name, String address) throws Exception {
     CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
-    try {
       return customerDAO.save(new Customer(id, name, address));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return false;
   }
 
-  public boolean deleteCustomer(String customerId) {
+  public boolean deleteCustomer(String customerId) throws Exception {
     CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
-    try {
       return customerDAO.delete(customerId);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return false;
   }
 
-  public boolean updateCustomer(String name, String address, String customerId) {
+  public boolean updateCustomer(String name, String address, String customerId) throws Exception {
     CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
-    try {
       return customerDAO.update(new Customer(customerId, name, address));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return false;
   }
 
 }
