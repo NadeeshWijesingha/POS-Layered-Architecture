@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import business.custom.OrderBO;
 import dao.DAOFactory;
 import dao.DAOType;
 import dao.custom.ItemDAO;
@@ -18,7 +19,7 @@ import entity.OrderDetail;
 import util.OrderDetailTM;
 import util.OrderTM;
 
-public class OrderBOImpl {
+public class OrderBOImpl implements OrderBO {
 
   public String getNewOrderId() {
     OrderDAO orderDAO = DAOFactory.getInstance().getDAO(DAOType.ORDER);

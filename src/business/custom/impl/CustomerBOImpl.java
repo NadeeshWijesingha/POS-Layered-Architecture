@@ -3,13 +3,14 @@ package business.custom.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.custom.CustomerBO;
 import dao.DAOFactory;
 import dao.DAOType;
 import dao.custom.CustomerDAO;
 import entity.Customer;
 import util.CustomerTM;
 
-public class CustomerBOImpl {
+public class CustomerBOImpl implements CustomerBO {
 
   public String getNewCustomerId() {
     CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);

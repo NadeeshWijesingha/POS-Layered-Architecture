@@ -4,13 +4,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.custom.ItemBO;
 import dao.DAOFactory;
 import dao.DAOType;
 import dao.custom.ItemDAO;
 import entity.Item;
 import util.ItemTM;
 
-public class ItemBOImpl {
+public class ItemBOImpl implements ItemBO {
 
   public String getNewItemCode() {
     ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
