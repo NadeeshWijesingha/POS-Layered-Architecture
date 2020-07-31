@@ -2,14 +2,13 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import db.DBConnection;
 
 public class CrudUtil {
 
-  public static boolean executeUpdate(String sql , Object... params) throws SQLException {
+  public static <T> T execute(String sql, Object... params) throws SQLException {
     Connection connection = DBConnection.getInstance().getConnection();
     PreparedStatement pstm = connection.prepareStatement(sql);
     int i = 0;
@@ -17,18 +16,9 @@ public class CrudUtil {
       i++;
       pstm.setObject(i, param);
     }
-    return pstm.executeUpdate() > 0;
-  }
-
-  public static ResultSet executeQuery(String sql , Object... params) throws SQLException {
-    Connection connection = DBConnection.getInstance().getConnection();
-    PreparedStatement pstm = connection.prepareStatement(sql);
-    int i = 0;
-    for (Object param : params) {
-      i++;
-      pstm.setObject(i, param);
+    if (sql.startsWith("SELECT")) {
+      return (T) pstm.executeQuery(); //ResultSet
     }
-    return pstm.executeQuery();
+    return (T) (Boolean) (pstm.executeUpdate() > 0); //Boolean
   }
-
 }
