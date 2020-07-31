@@ -160,7 +160,7 @@ public class BusinessLogic {
                 }
                 Item item = itemDAO.find(orderDetail.getCode());
                 item.setQtyOnHand(item.getQtyOnHand() - orderDetail.getQty());
-                result = DAOFactory.getInstance().getDAO(DAOType.ITEM).update(item);
+                itemDAO.update(item);
                 if (!result){
                     connection.rollback();
                     return false;
