@@ -12,8 +12,9 @@ import util.CustomerTM;
 
 public class CustomerBOImpl implements CustomerBO {
 
+  CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
+
   public String getNewCustomerId() throws Exception {
-    CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
     String lastCustomerId = null;
     try {
       lastCustomerId = customerDAO.getLastCustomerId();
@@ -38,7 +39,6 @@ public class CustomerBOImpl implements CustomerBO {
   }
 
   public List<CustomerTM> getAllCustomers() throws Exception {
-    CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
     List<Customer> allCustomers = null;
       allCustomers = customerDAO.findAll();
     List<CustomerTM> customers = new ArrayList<>();
@@ -49,17 +49,14 @@ public class CustomerBOImpl implements CustomerBO {
   }
 
   public boolean saveCustomer(String id, String name, String address) throws Exception {
-    CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
       return customerDAO.save(new Customer(id, name, address));
   }
 
   public boolean deleteCustomer(String customerId) throws Exception {
-    CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
       return customerDAO.delete(customerId);
   }
 
   public boolean updateCustomer(String name, String address, String customerId) throws Exception {
-    CustomerDAO customerDAO = DAOFactory.getInstance().getDAO(DAOType.CUSTOMER);
       return customerDAO.update(new Customer(customerId, name, address));
   }
 

@@ -13,8 +13,9 @@ import util.ItemTM;
 
 public class ItemBOImpl implements ItemBO {
 
+  ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
+
   public String getNewItemCode() throws Exception {
-    ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
     String lastItemCode = itemDAO.getLastItemCode();
 
     if (lastItemCode == null) {
@@ -35,7 +36,6 @@ public class ItemBOImpl implements ItemBO {
   }
 
   public List<ItemTM> getAllItems() throws Exception {
-    ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
     List<Item> allItems = itemDAO.findAll();
     List<ItemTM> items = new ArrayList<>();
     for (Item item : allItems) {
@@ -46,17 +46,14 @@ public class ItemBOImpl implements ItemBO {
   }
 
   public boolean saveItem(String code, String description, int qtyOnHand, double unitPrice) throws Exception {
-    ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
     return itemDAO.save(new Item(code, description, BigDecimal.valueOf(unitPrice), qtyOnHand));
   }
 
   public boolean deleteItem(String itemCode) throws Exception {
-    ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
     return itemDAO.delete(itemCode);
   }
 
   public boolean updateItem(String description, int qtyOnHand, double unitPrice, String itemCode) throws Exception {
-    ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
     return itemDAO.update(new Item(itemCode, description,
         BigDecimal.valueOf(unitPrice), qtyOnHand));
   }

@@ -21,8 +21,11 @@ import util.OrderTM;
 
 public class OrderBOImpl implements OrderBO {
 
+  OrderDAO orderDAO = DAOFactory.getInstance().getDAO(DAOType.ORDER);
+  OrderDetailDAO orderDetailDAO = DAOFactory.getInstance().getDAO(DAOType.ORDERDETAIL);
+  ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
+
   public String getNewOrderId() {
-    OrderDAO orderDAO = DAOFactory.getInstance().getDAO(DAOType.ORDER);
     String lastOrderId = null;
     try {
       lastOrderId = orderDAO.getLastOrderId();
@@ -48,9 +51,6 @@ public class OrderBOImpl implements OrderBO {
 
   public boolean placeOrder(OrderTM order, List<OrderDetailTM> orderDetails) throws Exception {
     Connection connection = DBConnection.getInstance().getConnection();
-    OrderDAO orderDAO = DAOFactory.getInstance().getDAO(DAOType.ORDER);
-    OrderDetailDAO orderDetailDAO = DAOFactory.getInstance().getDAO(DAOType.ORDERDETAIL);
-    ItemDAO itemDAO = DAOFactory.getInstance().getDAO(DAOType.ITEM);
     try {
       connection.setAutoCommit(false);
       boolean result = orderDAO.save(new Order(order.getOrderId(),
